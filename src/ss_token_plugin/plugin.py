@@ -1,7 +1,6 @@
 # Python module for an Ansible AWX custom credential type for Delinea or Thycotic Secret Server
 from typing import Callable, NamedTuple
 import os
-import requests  # For making HTTP requests
 from ss_token_plugin import exceptions
 
 # Initialize required inputs
@@ -52,24 +51,24 @@ def ss_auth_backend(api_url, api_username, api_password):
 
     return token
 
-def test_secret_lookup(api_url, token, secret_id):
-    secrets_url = f"https://YourSecretServerURLHere.com"
-    print(f"DEBUG: Retrieving secrets from URL: {secrets_url}")  # Debugging info
-
-    try:
-        secrets_response = requests.get(
-            secrets_url,
-            headers={'Authorization': f"Bearer {token}"},
-        )
-        secrets_response.raise_for_status()
-        secrets = secrets_response.json()
-        print(f"DEBUG: Retrieved secrets: {secrets}")  # Debugging info
-        return secrets
-    except Exception as e:
-        print(f"DEBUG: Failed to retrieve secrets: {str(e)}")  # Debugging info
-        raise Exception(f"Failed to retrieve secrets: {str(e)}")
-
 delinea_auth_plugin = CredentialPlugin("Delinea Secret Server Auth", inputs=ss_app_inputs, backend=ss_auth_backend)
+
+#def test_secret_lookup(api_url, token, secret_id):
+#    secrets_url = f"https://YourSecretServerURLHere.com"
+#   print(f"DEBUG: Retrieving secrets from URL: {secrets_url}")  # Debugging info
+
+#    try:
+#        secrets_response = requests.get(
+#            secrets_url,
+#            headers={'Authorization': f"Bearer {token}"},
+#        )
+#        secrets_response.raise_for_status()
+#        secrets = secrets_response.json()
+#        print(f"DEBUG: Retrieved secrets: {secrets}")  # Debugging info
+#        return secrets
+#    except Exception as e:
+#       print(f"DEBUG: Failed to retrieve secrets: {str(e)}")  # Debugging info
+#       raise Exception(f"Failed to retrieve secrets: {str(e)}")
 
 
 # DEBUGGING Main block to execute the script
